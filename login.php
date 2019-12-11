@@ -5,13 +5,12 @@ $errors = array();
 if (isset($_POST['email']) && isset($_POST['password'])) {
     require_once 'database/dbconnection.php';
     
-    $user = DB::run("SELECT * from users where email = ?", [$_POST['email']])->fetch(PDO::FETCH_ASSOC);
+$user = DB::run("SELECT * from users where email = ?", [$_POST['email']], "AND password = ?", [$_POST['password']])->fetch(PDO::FETCH_ASSOC);
     
     if (!$user) {
         array_push($errors, "Username is incorrect");
-    // uncomment the below once user creation uses password hashing
-    // } else if (!password_verify('$_POST['password']', $user['password'])) {
-    //     array_push($errors, "Password is incorrect");
+   } else if (!password_verify($_POST['password'], $user['password'])) {
+        array_push($errors, "Password is incorrect");
     }
     if (count($errors) == 0) {
         $_SESSION['logged_in'] = true;
@@ -26,4 +25,4 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         echo '<p><a href="login.php">Login failed, please try again</a></p>';
     }
 }
-?>
+
