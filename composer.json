@@ -3,7 +3,7 @@
     "description": "An application for lecturers to manage student coursework submissions",
     "type": "project",
     "require-dev": {
-        "phpunit/phpunit": "^8.4"
+        "phpunit/phpunit": "^12.5"
     },
     "authors": [
         {
